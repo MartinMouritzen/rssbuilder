@@ -1,0 +1,10 @@
+{
+	"channel": {
+		"fields": [
+			{
+				"Name": "Podcast name",
+				"type": "String"
+			}
+		]
+	}
+}
