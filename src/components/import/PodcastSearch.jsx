@@ -44,7 +44,7 @@ function PodcastSearch({ searchQuery, onPodcastSelected, selectedPodcast }) {
 			{ searchResults !== false && searchResults.count > 0 &&
 				searchResults.feeds.map((searchResult,index) => {
 					return (
-						<div className={'searchResult' + (selectedPodcast.id === searchResult.id ? ' selectedPodcast' : '')} onClick={() => { onPodcastSelected(searchResult); } }>
+						<div key={searchResult.id} className={'searchResult' + (selectedPodcast.id === searchResult.id ? ' selectedPodcast' : '')} onClick={() => { onPodcastSelected(searchResult); } }>
 							<img src={searchResult.artwork ? searchResult.artwork : searchResult.image} alt={searchResult.title + ' artwork'} />
 
 							<div className="title">{searchResult.title}</div>

@@ -10,7 +10,7 @@ import Button from '@material-ui/core/Button';
 import RSSParser from 'library/RSSParser';
 
 const RSSURLImporter = ({ onImportFinished }) => {
-	const [feedPath,setFeedPath] = useState('https://feed.nashownotes.com/rss.xml');
+	const [feedPath,setFeedPath] = useState('');
 	const [importing,setImporting] = useState(false);
 	const [error,setError] = useState(false);
 

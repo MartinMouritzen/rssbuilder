@@ -13,7 +13,7 @@ import { MuiPickersUtilsProvider, DateTimePicker } from "@material-ui/pickers";
 
 const RSSItem = ({ rssFeed, index, episode, onEpisodeChange }) => {
 	const onValueChange = (event) => {
-		rssFeed.items[index][event.target.attributeid] = event.target.value;
+		rssFeed.items[index][event.target.getAttribute('attributeid')] = event.target.value;
 		rssFeed = Object.assign({}, rssFeed);
 		onEpisodeChange();
 	};
@@ -29,7 +29,9 @@ const RSSItem = ({ rssFeed, index, episode, onEpisodeChange }) => {
 
 					<TextField
 						label="Episode title (eg. &quot;My favorite bunny&quot;)"
-						attributeid="title"
+						inputProps={{
+							attributeid: "title"
+						}}
 						value={episode.title}
 						onChange={onValueChange}
 					/>
@@ -37,7 +39,9 @@ const RSSItem = ({ rssFeed, index, episode, onEpisodeChange }) => {
 					<FormControl fullWidth style={{ marginTop: 20 }}>
 						<TextField
 							label="Description (eg. &quot;This episode is about...&quot;)"
-							attributeid="description"
+							inputProps={{
+								attributeid: "description"
+							}}
 							value={episode.description}
 							multiline
 							rows={10}
@@ -48,21 +52,27 @@ const RSSItem = ({ rssFeed, index, episode, onEpisodeChange }) => {
 
 					<TextField
 						label="Short description of the episode (max 255 characters)"
-						attributeid="subtitle"
+						inputProps={{
+							attributeid: "subtitle"
+						}}
 						value={episode.subtitle}
 						onChange={onValueChange}
 					/>
 
 					<TextField
 						label="Keywords for the episode, separated by comma &quot;,&quot;"
-						attributeid="keywords"
+						inputProps={{
+							attributeid: "keywords"
+						}}
 						value={episode.keywords}
 						onChange={onValueChange}
 					/>
 
 					<TextField
 						label="Link to view episode information (eg. &quot;https://www.example.com/mypodcastepisode/&quot;)"
-						attributeid="link"
+						inputProps={{
+							attributeid: "link"
+						}}
 						value={episode.link}
 						onChange={onValueChange}
 					/>
@@ -70,6 +80,9 @@ const RSSItem = ({ rssFeed, index, episode, onEpisodeChange }) => {
 					<DateTimePicker
 						label="Publish date"
 						inputVariant="outlined"
+						inputProps={{
+							attributeid: "date"
+						}}
 						value={episode.date}
 						onChange={onValueChange}
 					/>
@@ -77,6 +90,9 @@ const RSSItem = ({ rssFeed, index, episode, onEpisodeChange }) => {
 					<TextField
 						label="Unique ID for episode"
 						attributeid="guid"
+						inputProps={{
+							attributeid: "guid"
+						}}
 						value={episode.guid}
 						onChange={onValueChange}
 					/>
@@ -99,7 +115,9 @@ const RSSItem = ({ rssFeed, index, episode, onEpisodeChange }) => {
 
 					<TextField
 						label="Author name (eg. &quot;Martin Mouritzen&quot;)"
-						attributeid="author"
+						inputProps={{
+							attributeid: "author"
+						}}
 						value={episode.author}
 						onChange={onValueChange}
 					/>
@@ -125,35 +143,45 @@ const RSSItem = ({ rssFeed, index, episode, onEpisodeChange }) => {
 							<FormControl fullWidth>
 								<TextField
 									label="Link to cover art for the episode"
-									attributeid="imageUrl"
+									inputProps={{
+										attributeid: "imageUrl"
+									}}
 									value={episode.imageUrl}
 									onChange={onValueChange}
 								/>
 
 <TextField
 									label="Link to audio or video file"
-									attributeid="enclosureUrl"
+									inputProps={{
+										attributeid: "enclosureUrl"
+									}}
 									value={episode.enclosureUrl}
 									onChange={onValueChange}
 								/>
 
 								<TextField
 									label="Audio or video type (most likely &quot;audio/mpeg&quot;)"
-									attributeid="enclosureType"
+									inputProps={{
+										attributeid: "enclosureType"
+									}}
 									value={episode.enclosureType}
 									onChange={onValueChange}
 								/>
 
 								<TextField
 									label="Audio/video file length. Leave blank if unsure."
-									attributeid="enclosureLength"
+									inputProps={{
+										attributeid: "enclosureLength"
+									}}
 									value={episode.enclosureLength}
 									onChange={onValueChange}
 								/>
 
 								<TextField
 									label="Link to chapters file"
-									attributeid="chaptersUrl"
+									inputProps={{
+										attributeid: "chaptersUrl"
+									}}
 									value={episode.chaptersUrl}
 									onChange={onValueChange}
 								/>
@@ -172,4 +200,4 @@ const RSSItem = ({ rssFeed, index, episode, onEpisodeChange }) => {
 		</Paper>
 	);
 };
-export default RSSItem;
+export default React.memo(RSSItem);

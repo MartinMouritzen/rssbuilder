@@ -121,13 +121,13 @@ class RSSParser {
 				link: episode.link,
 				guid: episode.guid ? episode.guid['#text'] : false,
 				guidIsPermaLink: episode.guid ? episode.guid['isPermaLink'] === 'true' ? true : false : false,
-				enclosureType: episode.enclosure ? episode.enclosure.type : false,
-				enclosureLength: episode.enclosure ? episode.enclosure.length : false,
-				enclosureUrl: episode.enclosure ? episode.enclosure.url : false,
+				enclosureType: episode.enclosure ? episode.enclosure.type : '',
+				enclosureLength: episode.enclosure ? episode.enclosure.length : '',
+				enclosureUrl: episode.enclosure ? episode.enclosure.url : '',
 				duration: this.convertDurationToSeconds(episode['itunes:duration']),
 				transcript: episode['podcast:transcript'],
-				chaptersUrl: episode['podcast:chapters'] ? episode['podcast:chapters']['url'] : false,
-				chaptersType: episode['podcast:chapters'] ? episode['podcast:chapters']['type'] : false
+				chaptersUrl: episode['podcast:chapters'] ? episode['podcast:chapters']['url'] : '',
+				chaptersType: episode['podcast:chapters'] ? episode['podcast:chapters']['type'] : ''
 			});
 		});
 		rssFeed.items = episodes;

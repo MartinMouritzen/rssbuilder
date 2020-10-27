@@ -225,4 +225,4 @@ const PodcastConfig = ({ rssFeed, episodes, showCodePreview }) => {
 	}
 
 };
-export default PodcastConfig;
+export default React.memo(PodcastConfig);
