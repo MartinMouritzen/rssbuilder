@@ -81,6 +81,11 @@ class RSSParser {
 		rssFeed.webMaster = podcast['webMaster'];
 		rssFeed.locked = podcast['locked'];
 
+		if (podcast['itunes:owner']) {
+			rssFeed.owner = podcast['itunes:owner']['itunes:name'];
+			rssFeed.ownerEmail = podcast['itunes:owner']['itunes:email'];
+		}
+
 		let episodes = [];
 		podcast.item.forEach((episode) => {
 			if (!episode['itunes:duration']) {

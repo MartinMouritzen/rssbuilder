@@ -23,7 +23,6 @@ const RSSImportTool = ({ onImport }) => {
 				How do you want to continue?
 			</Typography>
 
-
 			<Accordion>
 				<AccordionSummary expandIcon={<ExpandMoreIcon />}>
 					I want to import RSS from a link

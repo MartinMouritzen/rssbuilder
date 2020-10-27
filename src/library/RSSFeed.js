@@ -64,13 +64,17 @@ class RSSFeed {
 				code += `\t\t<copyright>${this.copyright}</copyright>\n`;
 			}
 			if (this.managingEditor) {
-				code += `\t\t<managingEditor>${this.managingEditor}`;
-				/*
-				if (this.editorEmail && this.editorEmail.length > 0) {
-					code += ` (${this.editorEmail})`;
+				code += `\t\t<managingEditor>${this.managingEditor}</managingEditor>\n`;
+			}
+			if (this.owner || this.ownerEmail) {
+				code += '\t\t<itunes:owner>\n';
+				if (this.owner) {
+					code += `\t\t\t<itunes:name>${this.owner}</itunes:name>\n`;
 				}
-				*/
-				code += '</managingEditor>\n';
+				if (this.ownerEmail) {
+					code += `\t\t\t<itunes:email>${this.ownerEmail}</itunes:email>\n`;
+				}
+				code += '\t\t</itunes:owner>\n';
 			}
 
 			if (this.imageUrl) {
@@ -117,39 +121,38 @@ class RSSFeed {
 	generatePodcastItemXML(item) {
 		let code = '';
 		code += '\t\t<item>\n';
-		code += this.addEpisodeLine(item,'title');
-		code += this.addEpisodeLine(item,'description');
-		code += this.addEpisodeLine(item,'link');
-		code += this.addEpisodeLine(item,'itunes:subtitle','subtitle');
+			code += this.addEpisodeLine(item,'title');
+			code += this.addEpisodeLine(item,'description');
+			code += this.addEpisodeLine(item,'link');
+			code += this.addEpisodeLine(item,'itunes:subtitle','subtitle');
 
-		if (item.imageUrl) {
-			code += `\t\t\t<itunes:image href="${item.imageUrl}" />\n`;
-		}
-		
-
-		if (item.enclosureUrl) {
-			code += `\t\t\t<enclosure url="'${item.enclosureUrl}'"`;
-				if (item.enclosureLength) {
-					code += ` length="${item.enclosureLength}"`;
-				}
-				if (item.enclosureType) {
-					code += ` type="${item.enclosureType}"`;
-				}
-			code += ' />\n';
-		}
-		if (item.guid) {
-			code += '\t\t\t<guid';
-			if (item.guidIsPermaLink) {
-				code += ' isPermaLink="true"';
+			if (item.imageUrl) {
+				code += `\t\t\t<itunes:image href="${item.imageUrl}" />\n`;
 			}
-			code += `>${item.guid}</guid>\n`;
-		}
-		code += this.addEpisodeLine(item,'pubDate');
+			
 
-		if (item.author) {
-			code += `\t\t\t<author>${item.author}</author>\n`;
-			code += `\t\t\t<itunes:author>${item.author}</itunes:author>\n`;
-		}
+			if (item.enclosureUrl) {
+				code += `\t\t\t<enclosure url="'${item.enclosureUrl}'"`;
+					if (item.enclosureLength) {
+						code += ` length="${item.enclosureLength}"`;
+					}
+					if (item.enclosureType) {
+						code += ` type="${item.enclosureType}"`;
+					}
+				code += ' />\n';
+			}
+			if (item.guid) {
+				code += '\t\t\t<guid';
+				if (item.guidIsPermaLink) {
+					code += ' isPermaLink="true"';
+				}
+				code += `>${item.guid}</guid>\n`;
+			}
+			code += this.addEpisodeLine(item,'pubDate');
+
+			code += this.addEpisodeLine(item,'author','author');
+			code += this.addEpisodeLine(item,'itunes:author','author');
+
 		code += '\t\t</item>\n';
 		return code;
 	}
