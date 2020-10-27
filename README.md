@@ -24,7 +24,11 @@ channel->language
 channel->managingEditor
 channel->webMaster
 channel->itunes:owner
+channel->itunes:author
+channel->itunes:summary
+channel->itunes:image
 channel->image
+channel->explicit
 ### Item
 item->title
 item->description

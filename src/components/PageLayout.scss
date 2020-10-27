@@ -13,3 +13,54 @@
 	margin-bottom: 30px;
 	padding: 20px;
 }
+
+.searchPane {
+
+	.loading {
+
+	}
+	.searchResult {
+		float: left;
+
+		background-color: #EEEEEE;
+
+		max-width: 170px;
+		height: 230px;
+
+		overflow: hidden;
+
+		padding: 10px;
+		margin: 10px;
+
+		transition: all 0.3s;
+
+		cursor: pointer;
+
+		.title {
+			display: -webkit-box;
+			-webkit-line-clamp: 2;
+			-webkit-box-orient: vertical;  
+			overflow: hidden;
+			font-weight: bold;
+		}
+		.author {
+			display: -webkit-box;
+			-webkit-line-clamp: 1;
+			-webkit-box-orient: vertical;  
+			overflow: hidden;
+		}
+
+		img {
+			width: 150px;
+			height: 150px;
+		}
+	}
+	.selectedPodcast, .selectedPodcast:hover {
+		background-color: rgba(26, 188, 156,1.0) !important;
+	}
+	@media (any-hover: hover) {
+		.searchResult:hover {
+			background-color: #bbbbbb;
+		}
+	}
+}

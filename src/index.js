@@ -6,11 +6,9 @@ import RSSBuilder from 'components/RSSBuilder';
 
 
 ReactDOM.render(
-	<React.StrictMode>
-		<PageLayout>
-    		<RSSBuilder />
-		</PageLayout>
-	</React.StrictMode>,
+	<PageLayout>
+   		<RSSBuilder />
+	</PageLayout>,
 	document.getElementById('root')
 );
 

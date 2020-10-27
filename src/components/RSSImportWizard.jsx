@@ -7,13 +7,13 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import Typography from '@material-ui/core/Typography';
 
-import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 
 import RSSFeed from 'library/RSSFeed';
 
 import RSSURLImporter from 'components/import/RSSURLImporter';
 import RSSPasteImporter from 'components/import/RSSPasteImporter';
+import RSSSearchImporter from 'components/import/RSSSearchImporter';
 
 const RSSImportTool = ({ onImport }) => {
 
@@ -23,6 +23,14 @@ const RSSImportTool = ({ onImport }) => {
 				How do you want to continue?
 			</Typography>
 
+			<Accordion>
+				<AccordionSummary expandIcon={<ExpandMoreIcon />}>
+					I want to search for my podcast
+				</AccordionSummary>
+				<AccordionDetails>
+					<RSSSearchImporter onImportFinished={onImport} />
+				</AccordionDetails>
+			</Accordion>
 			<Accordion>
 				<AccordionSummary expandIcon={<ExpandMoreIcon />}>
 					I want to import RSS from a link

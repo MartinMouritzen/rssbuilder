@@ -29,10 +29,10 @@ const PodcastConfig = ({ rssFeed, episodes, showCodePreview }) => {
 	};
 
 	useEffect(() => {
-		var code = rssFeed.generatePodcastInfoXML();
+		var code = rssFeed.generatePodcastInfoXML(true);
 		setCode(code);
 	// },[rssFeed,episodes]);
-	},[usingFeed,episodes]);
+	},[rssFeed,usingFeed,episodes]);
 	
 
 	const visualElement = (
@@ -55,8 +55,25 @@ const PodcastConfig = ({ rssFeed, episodes, showCodePreview }) => {
 					label="Description for your podcast"
 					id="description"
 					value={rssFeed.description}
+					rows={10}
+					variant="outlined"
 					multiline
 					required
+					onChange={onValueChange}
+				/>
+
+				<TextField
+					label="Short summary about your podcast"
+					id="summary"
+					value={rssFeed.summary}
+					multiline
+					onChange={onValueChange}
+				/>
+
+				<TextField
+					label="Keywords for your podcast, separated by comma &quot;,&quot;"
+					id="keywords"
+					value={rssFeed.keywords}
 					onChange={onValueChange}
 				/>
 
@@ -84,7 +101,7 @@ const PodcastConfig = ({ rssFeed, episodes, showCodePreview }) => {
 					>
 					{ languages.map((language) => {
 						return (
-							<option value={language[1]}>{language[0]}</option>
+							<option value={language[1]} key={language[1]}>{language[0]}</option>
 						)
 					} ) }
 				</Select>
@@ -96,6 +113,22 @@ const PodcastConfig = ({ rssFeed, episodes, showCodePreview }) => {
 					value={rssFeed.copyright}
 					onChange={onValueChange}
 				/>
+
+				<FormControl style={{marginTop: 5}}>
+					<InputLabel htmlFor="explicit">Is the podcast explicit?</InputLabel>
+					<Select
+						native
+						value={rssFeed.explicit}
+						onChange={onValueChange}
+						inputProps={{
+							name: 'Is the podcast explicit?',
+							id: 'explicit',
+						}}
+						>
+						<option key='yes'>Yes</option>
+						<option key='no'>No</option>
+					</Select>
+				</FormControl>
 
 				{ showAdvancedPeopleFields === false &&
 					<Typography component="h2" variant="h4" color="primary" style={{ marginTop: 30, marginBottom: 10 }}>
@@ -119,20 +152,19 @@ const PodcastConfig = ({ rssFeed, episodes, showCodePreview }) => {
 					value={rssFeed.managingEditor}
 					onChange={onValueChange}
 				/>
-				{/*
-				<TextField
-					label="Editor e-mail"
-					id="editorEmail"
-					value={rssFeed.editorEmail}
-					onChange={onValueChange}
-				/>
-				*/}
 
 				<FormControl fullWidth style={{ display: 'inline-flex', height: showAdvancedPeopleFields ? 'auto' : 0, overflow: 'hidden', transition: 'all 0.3s' }}>
 					<TextField
 						label="Webmaster"
 						id="webMaster"
 						value={rssFeed.webMaster}
+						onChange={onValueChange}
+					/>
+
+					<TextField
+						label="Author"
+						id="author"
+						value={rssFeed.author}
 						onChange={onValueChange}
 					/>
 
@@ -171,7 +203,7 @@ const PodcastConfig = ({ rssFeed, episodes, showCodePreview }) => {
 					<Grid item xs={1} md={1} lg={1} />
 					<Grid item xs={3} md={3} lg={3}>
 						{ rssFeed.imageUrl &&
-							<img src={rssFeed.imageUrl} style={{ width: '90%', height: 'auto', maxWidth: 300, maxHeight: 300 }}/>
+							<img src={rssFeed.imageUrl} style={{ width: '90%', height: 'auto', maxWidth: 300, maxHeight: 300 }} alt="" />
 						}
 					</Grid>
 				</Grid>

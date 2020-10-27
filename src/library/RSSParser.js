@@ -22,8 +22,6 @@ class RSSParser {
 		}
 		var timePieces = duration.split(':');
 		
-		// console.log(timePieces);
-		
 		if (timePieces.length === 1) {
 			return timePieces[0];
 		}
@@ -34,16 +32,14 @@ class RSSParser {
 				timePieces[1]
 			];
 		}
-		var result = (+timePieces[0]) * 60 * 60 + (+timePieces[1]) * 60 + (+timePieces[2]); 
-		// console.log(result);
-		return result;
+		return (+timePieces[0]) * 60 * 60 + (+timePieces[1]) * 60 + (+timePieces[2]); 
 	}
 	/**
 	* Parses a RSS body
 	*/
 	parse() {
 		if (!this.rssContent) {
-			throw 'No RSS content to parse';
+			throw new Error('No RSS content to parse');
 		}
 		var rssFeed = new RSSFeed();
 
@@ -54,7 +50,7 @@ class RSSParser {
 		});
 
 		var podcast = xml.rss.channel;
-		console.log(podcast);
+
 		rssFeed.title = podcast.title;
 		rssFeed.description = podcast.description;
 
@@ -68,7 +64,7 @@ class RSSParser {
 		}
 		rssFeed.docs = podcast['docs'];
 		rssFeed.generator = podcast['generator'];
-		rssFeed.language = podcast['language'];
+		rssFeed.language = podcast['language'] ? podcast['language'] : 'en';
 		rssFeed.copyright = podcast['copyright'];
 		rssFeed.pubDate = podcast['pubDate'];
 		rssFeed.lastBuildDate = podcast['lastBuildDate'];
@@ -80,6 +76,24 @@ class RSSParser {
 		rssFeed.managingEditor = podcast['managingEditor'];
 		rssFeed.webMaster = podcast['webMaster'];
 		rssFeed.locked = podcast['locked'];
+
+		rssFeed.keywords = podcast['itunes:keywords'];
+
+		rssFeed.summary = podcast['itunes:summary'];
+
+		rssFeed.author = podcast['itunes:author'];
+
+		rssFeed.explicit = podcast['itunes:explicit'];
+
+		if (podcast['itunes:category']) {
+			var categories = [];
+			if (Array.isArray(podcast['itunes:category'])) {
+				for(var i=0;i<podcast['itunes:category'].length;i++) {
+					categories.push(podcast['itunes:category'][i].text);
+				}
+			}
+			rssFeed.categories = categories;
+		}
 
 		if (podcast['itunes:owner']) {
 			rssFeed.owner = podcast['itunes:owner']['itunes:name'];
@@ -93,6 +107,7 @@ class RSSParser {
 			}
 
 			episodes.push({
+				uid: Math.random() * 99999999999, // We just use this to generate keys in React
 				title: episode.title,
 				description: episode['itunes:summary'] ? episode['itunes:summary'] : episode['itunes:subtitle'] ? episode['itunes:subtitle'] : episode['description'] ? episode['description'] : '',
 				author: episode.author ? episode.author : episode['itunes:author'] ? episode['itunes:author'] : false,
@@ -101,21 +116,21 @@ class RSSParser {
 				keywords: episode['itunes:keywords'],
 				subtitle: episode['itunes:subtitle'],
 				itunesSummary: episode['itunes:summary'],
+				pubDate: episode.pubDate,
 				date: new Date(Date.parse(episode.pubDate)),
 				link: episode.link,
 				guid: episode.guid ? episode.guid['#text'] : false,
-				guidIsPermaLink: episode.guid ? episode.guid['isPermaLink'] == 'true' ? true : false : false,
+				guidIsPermaLink: episode.guid ? episode.guid['isPermaLink'] === 'true' ? true : false : false,
 				enclosureType: episode.enclosure ? episode.enclosure.type : false,
 				enclosureLength: episode.enclosure ? episode.enclosure.length : false,
-				encloseUrl: episode.enclosure ? episode.enclosure.url : false,
+				enclosureUrl: episode.enclosure ? episode.enclosure.url : false,
 				duration: this.convertDurationToSeconds(episode['itunes:duration']),
 				transcript: episode['podcast:transcript'],
-				chapters: episode['podcast:chapters']
+				chaptersUrl: episode['podcast:chapters'] ? episode['podcast:chapters']['url'] : false,
+				chaptersType: episode['podcast:chapters'] ? episode['podcast:chapters']['type'] : false
 			});
 		});
 		rssFeed.items = episodes;
-
-		console.log(rssFeed);
 		return rssFeed;
 	}
 }
