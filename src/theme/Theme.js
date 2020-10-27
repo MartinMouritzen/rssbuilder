@@ -3,6 +3,14 @@ import { createMuiTheme } from '@material-ui/core/styles';
 // Color inspiration from https://flatuicolors.com/palette/defo
 
 const theme = createMuiTheme({
+	overrides: {
+		MuiTextField: {
+			root: {
+				marginTop: "10px",
+				marginBottom: "10px"
+			}
+		}
+	},
 	palette: {
 		primary: {
 			main: 'rgba(26, 188, 156,1.0)',

@@ -1,8 +1,11 @@
 import React from 'react';
 
-import SyntaxHighlighter from 'react-syntax-highlighter';
+import { LightAsync as SyntaxHighlighter } from 'react-syntax-highlighter';
+import xml from 'react-syntax-highlighter/dist/esm/languages/hljs/xml';
 
 import { hybrid } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+
+SyntaxHighlighter.registerLanguage('xml', xml);
 
 const RSSFeedCodePreview = ({ code }) => {
 	return (

@@ -4,6 +4,12 @@ import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import TextField from '@material-ui/core/TextField';
 import Switch from '@material-ui/core/Switch';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+
+import Grid from '@material-ui/core/Grid';
+
+import languages from 'library/languageCodes';
 
 import Typography from '@material-ui/core/Typography';
 
@@ -13,17 +19,6 @@ const PodcastConfig = ({ rssFeed, episodes, showCodePreview }) => {
 	const [code,setCode] = useState('');
 
 	const [usingFeed,setUsingFeed] = useState(rssFeed);
-
-	const [title,setTitle] = useState(rssFeed.title);
-	const [description,setDescription] = useState(rssFeed.description);
-	const [link,setLink] = useState(rssFeed.link);
-	const [language,setLanguage] = useState(rssFeed.language);
-	const [copyright,setCopyright] = useState(rssFeed.copyright);
-	const [editor,setEditor] = useState(rssFeed.managingEditor);
-	const [editorEmail,setEditorEmail] = useState(rssFeed.editorEmail);
-	
-
-	const [webMaster,setWebMaster] = useState(rssFeed.webMaster);
 
 	const [showAdvancedPeopleFields,setShowAdvancedPeopleFields] = useState(false);
 
@@ -76,12 +71,24 @@ const PodcastConfig = ({ rssFeed, episodes, showCodePreview }) => {
 					onChange={onValueChange}
 				/>
 
-				<TextField
-					label="Language (eg. &quot;en&quot;)"
-					id="language"
+				<FormControl style={{marginTop: 5}}>
+				<InputLabel htmlFor="language">Language</InputLabel>
+				<Select
+					native
 					value={rssFeed.language}
 					onChange={onValueChange}
-				/>
+					inputProps={{
+						name: 'Language',
+						id: 'language',
+					}}
+					>
+					{ languages.map((language) => {
+						return (
+							<option value={language[1]}>{language[0]}</option>
+						)
+					} ) }
+				</Select>
+				</FormControl>
 
 				<TextField
 					label="Copyright (eg. &quot;John Doe&quot;)"
@@ -112,13 +119,14 @@ const PodcastConfig = ({ rssFeed, episodes, showCodePreview }) => {
 					value={rssFeed.managingEditor}
 					onChange={onValueChange}
 				/>
-
+				{/*
 				<TextField
 					label="Editor e-mail"
 					id="editorEmail"
 					value={rssFeed.editorEmail}
 					onChange={onValueChange}
 				/>
+				*/}
 
 				<FormControl fullWidth style={{ display: 'inline-flex', height: showAdvancedPeopleFields ? 'auto' : 0, overflow: 'hidden', transition: 'all 0.3s' }}>
 					<TextField
@@ -127,7 +135,46 @@ const PodcastConfig = ({ rssFeed, episodes, showCodePreview }) => {
 						value={rssFeed.webMaster}
 						onChange={onValueChange}
 					/>
+
+					<TextField
+						label="Owner"
+						id="owner"
+						value={rssFeed.owner}
+						onChange={onValueChange}
+					/>
+
+					<TextField
+						label="Owner e-mail"
+						id="ownerEmail"
+						value={rssFeed.ownerEmail}
+						onChange={onValueChange}
+					/>
 				</FormControl>
+
+				<Typography component="h2" variant="h4" color="primary" style={{ marginTop: 30, marginBottom: 10 }}>
+					The image representing your podcast
+				</Typography>
+
+				<p>This image will be displayed in podcast apps to represent your podcast.</p>
+
+				<Grid container>
+					<Grid item xs={8} md={8} lg={8}>
+						<FormControl fullWidth>
+							<TextField
+								label="Link to cover art for the podcast"
+								id="imageUrl"
+								value={rssFeed.imageUrl}
+								onChange={onValueChange}
+							/>
+						</FormControl>
+					</Grid>
+					<Grid item xs={1} md={1} lg={1} />
+					<Grid item xs={3} md={3} lg={3}>
+						{ rssFeed.imageUrl &&
+							<img src={rssFeed.imageUrl} style={{ width: '90%', height: 'auto', maxWidth: 300, maxHeight: 300 }}/>
+						}
+					</Grid>
+				</Grid>
 
 			</FormControl>
 		</div>
