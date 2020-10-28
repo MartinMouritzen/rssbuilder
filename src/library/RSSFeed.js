@@ -38,7 +38,7 @@ class RSSFeed {
 	*/
 	generatePodcastInfoXML(preview = false) {
 		let code = '';
-		code += '<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">\n';
+		code += '<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:podcast="https://github.com/Podcastindex-org/podcast-namespace/blob/main/docs/1.0.md" version="2.0">\n';
 		code += '\t<channel>\n';
 			code += `\t\t<title>${this.title}</title>\n`;
 
@@ -160,7 +160,7 @@ class RSSFeed {
 		code += '\t\t<item>\n';
 			code += this.addEpisodeLine(item,'title');
 
-			if (this.description) {
+			if (item.description && item.description.length) {
 				if (preview) {
 					code += `\t\t\t<description>${(item.description.length > 100 ? item.description.substring(0,100) + ' [long text hidden in preview].' : item.description)}</description>\n`;
 					code += `\t\t\t<itunes:summary>${(item.description.length > 100 ? item.description.substring(0,100) + ' [long text hidden in preview].' : item.description)}</itunes:summary>\n`;
