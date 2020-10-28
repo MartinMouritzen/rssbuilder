@@ -17,31 +17,31 @@ This project is part of the [Podcast Index Project](https://www.podcastindex.org
 
 ## Fully support tag list
 ### Channel
-channel->title
-channel->description (would be nice with a WYSIWYG editor maybe?)
-channel->docs
-channel->language
-channel->managingEditor
-channel->webMaster
-channel->itunes:owner
-channel->itunes:author
-channel->itunes:summary
-channel->itunes:image
-channel->itunes:explicit
-channel->itunes:keywords
-channel->image
+- channel->title
+- channel->description (would be nice with a WYSIWYG editor maybe?)
+- channel->docs
+- channel->language
+- channel->managingEditor
+- channel->webMaster
+- channel->itunes:owner
+- channel->itunes:author
+- channel->itunes:summary
+- channel->itunes:image
+- channel->itunes:explicit
+- channel->itunes:keywords
+- channel->image
 
 ### Item
-item->title
-item->description
-item->link
-item->enclosure
-item->pubDate
-item->itunes:image
-item->itunes:author
-item->itunes:subtitle
-item->itunes:keywords
-item->podcast:chapters (it will assume a type of JSON right now)
+- item->title
+- item->description
+- item->link
+- item->enclosure
+- item->pubDate
+- item->itunes:image
+- item->itunes:author
+- item->itunes:subtitle
+- item->itunes:keywords
+- item->podcast:chapters (it will assume a type of JSON right now)
   
 
 ## Partial support tag list
