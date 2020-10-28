@@ -101,36 +101,44 @@ class RSSParser {
 		}
 
 		let episodes = [];
-		podcast.item.forEach((episode) => {
-			if (!episode['itunes:duration']) {
-				episode['itunes:duration'] = '00:00';
+
+		if (podcast.item) {
+			// If there's only one item, it will not be an array, so let's turn it into one.
+			if (!Array.isArray(podcast.item)) {
+				podcast.item = [ podcast.item ];
 			}
 
-			episodes.push({
-				uid: Math.random() * 99999999999, // We just use this to generate keys in React
-				title: episode.title,
-				description: episode['itunes:summary'] ? episode['itunes:summary'] : episode['itunes:subtitle'] ? episode['itunes:subtitle'] : episode['description'] ? episode['description'] : '',
-				author: episode.author ? episode.author : episode['itunes:author'] ? episode['itunes:author'] : false,
-				imageUrl: episode['itunes:image'] ? episode['itunes:image']['href'] : false,
-				explicit: episode['itunes:explicit'],
-				keywords: episode['itunes:keywords'],
-				subtitle: episode['itunes:subtitle'],
-				itunesSummary: episode['itunes:summary'],
-				pubDate: episode.pubDate,
-				date: new Date(Date.parse(episode.pubDate)),
-				link: episode.link,
-				guid: episode.guid ? episode.guid['#text'] : false,
-				guidIsPermaLink: episode.guid ? episode.guid['isPermaLink'] === 'true' ? true : false : false,
-				enclosureType: episode.enclosure ? episode.enclosure.type : '',
-				enclosureLength: episode.enclosure ? episode.enclosure.length : '',
-				enclosureUrl: episode.enclosure ? episode.enclosure.url : '',
-				duration: this.convertDurationToSeconds(episode['itunes:duration']),
-				transcript: episode['podcast:transcript'],
-				chaptersUrl: episode['podcast:chapters'] ? episode['podcast:chapters']['url'] : '',
-				chaptersType: episode['podcast:chapters'] ? episode['podcast:chapters']['type'] : ''
+			podcast.item.forEach((episode) => {
+				if (!episode['itunes:duration']) {
+					episode['itunes:duration'] = '00:00';
+				}
+
+				episodes.push({
+					uid: Math.random() * 99999999999, // We just use this to generate keys in React
+					title: episode.title,
+					description: episode['itunes:summary'] ? episode['itunes:summary'] : episode['itunes:subtitle'] ? episode['itunes:subtitle'] : episode['description'] ? episode['description'] : '',
+					author: episode.author ? episode.author : episode['itunes:author'] ? episode['itunes:author'] : false,
+					imageUrl: episode['itunes:image'] ? episode['itunes:image']['href'] : false,
+					explicit: episode['itunes:explicit'],
+					keywords: episode['itunes:keywords'],
+					subtitle: episode['itunes:subtitle'],
+					itunesSummary: episode['itunes:summary'],
+					pubDate: episode.pubDate,
+					date: new Date(Date.parse(episode.pubDate)),
+					link: episode.link,
+					guid: episode.guid ? episode.guid['#text'] : false,
+					guidIsPermaLink: episode.guid ? episode.guid['isPermaLink'] === 'true' ? true : false : false,
+					enclosureType: episode.enclosure ? episode.enclosure.type : '',
+					enclosureLength: episode.enclosure ? episode.enclosure.length : '',
+					enclosureUrl: episode.enclosure ? episode.enclosure.url : '',
+					duration: this.convertDurationToSeconds(episode['itunes:duration']),
+					transcript: episode['podcast:transcript'],
+					chaptersUrl: episode['podcast:chapters'] ? episode['podcast:chapters']['url'] : '',
+					chaptersType: episode['podcast:chapters'] ? episode['podcast:chapters']['type'] : ''
+				});
 			});
-		});
-		rssFeed.items = episodes;
+			rssFeed.items = episodes;
+		}
 		return rssFeed;
 	}
 }

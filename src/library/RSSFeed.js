@@ -41,11 +41,14 @@ class RSSFeed {
 		code += '<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">\n';
 		code += '\t<channel>\n';
 			code += `\t\t<title>${this.title}</title>\n`;
-			if (preview) {
-				code += `\t\t<description>${(this.description.length > 100 ? this.description.substring(0,100) + ' [long text hidden in preview].' : this.description)}</description>\n`;
-			}
-			else {
-				code += `\t\t<description>${this.description}</description>\n`;
+
+			if (this.description) {
+				if (preview) {
+					code += `\t\t<description>${(this.description.length > 100 ? this.description.substring(0,100) + ' [long text hidden in preview].' : this.description)}</description>\n`;
+				}
+				else {
+					code += `\t\t<description>${this.description}</description>\n`;
+				}
 			}
 			if (this.summary) {
 				code += `\t\t<itunes:summary>${this.summary}</itunes:summary>\n`;
@@ -157,13 +160,15 @@ class RSSFeed {
 		code += '\t\t<item>\n';
 			code += this.addEpisodeLine(item,'title');
 
-			if (preview) {
-				code += `\t\t\t<description>${(item.description.length > 100 ? item.description.substring(0,100) + ' [long text hidden in preview].' : item.description)}</description>\n`;
-				code += `\t\t\t<itunes:summary>${(item.description.length > 100 ? item.description.substring(0,100) + ' [long text hidden in preview].' : item.description)}</itunes:summary>\n`;
-			}
-			else {
-				code += `\t\t\t<description>${item.description}</description>\n`;
-				code += `\t\t\t<itunes:summary>${item.description}</itunes:summary>\n`;
+			if (this.description) {
+				if (preview) {
+					code += `\t\t\t<description>${(item.description.length > 100 ? item.description.substring(0,100) + ' [long text hidden in preview].' : item.description)}</description>\n`;
+					code += `\t\t\t<itunes:summary>${(item.description.length > 100 ? item.description.substring(0,100) + ' [long text hidden in preview].' : item.description)}</itunes:summary>\n`;
+				}
+				else {
+					code += `\t\t\t<description>${item.description}</description>\n`;
+					code += `\t\t\t<itunes:summary>${item.description}</itunes:summary>\n`;
+				}
 			}
 			code += this.addEpisodeLine(item,'link');
 			code += this.addEpisodeLine(item,'itunes:subtitle','subtitle');
